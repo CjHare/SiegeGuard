@@ -1,0 +1,108 @@
+import {queryStringParameterToNumber} from '@just_another_developer/common-server'
+import {plainToClass, classToPlain} from 'class-transformer'
+import {Request, Response} from 'express'
+import {GetPolicyRequest} from './request/get-policy-request'
+import {GetPoliciesRequest} from './request/get-policies-request'
+import {CreatePolicyRequest} from './request/create-policy-request'
+import {DeletePolicyRequest} from './request/delete-policy-request'
+import {UpdatePolicyRequest} from './request/update-policy-request'
+import {policy} from '../model/policy'
+import {slimPolicy} from '../model/slim-policy'
+import {log} from '../container'
+
+export function getPolicy(request: Request, response: Response): void {
+  const getPolicy = plainToClass(GetPolicyRequest, request.body)
+
+  if (
+    request.params.policyId === '12321' &&
+    getPolicy.organisation === '5ds-demo'
+  ) {
+    const found = policy(
+      '5DS-P122322',
+      '2-3.MPA.Action',
+      ['5DS-A202221', '5DS-A202222', '5DS-A202226'],
+      '5ds-demo'
+    )
+    response.send(JSON.parse(JSON.stringify(classToPlain(found))))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(404)
+    response.end()
+  }
+}
+
+export function getPolicies(request: Request, response: Response): void {
+  const getPolicies = plainToClass(GetPoliciesRequest, request.body)
+
+  const page = queryStringParameterToNumber('page', request.query, 1)
+  const limit = queryStringParameterToNumber('limit', request.query, 25)
+
+  log.silly(`${page} ${limit}`)
+
+  if (getPolicies.organisation === '5ds-demo') {
+    const found = [
+      slimPolicy('5DS-P202232', '2-3.MPA.Action'),
+      slimPolicy('5DS-P20223', '2-3.MPA.Action')
+    ]
+    response.send(classToPlain(found))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(500)
+    response.end()
+  }
+}
+
+export function createPolicy(request: Request, response: Response): void {
+  const createPolicy = plainToClass(CreatePolicyRequest, request.body)
+
+  if (createPolicy.organisation === '5ds-demo') {
+    const found = policy(
+      '5DS-P122322',
+      '2-3.MPA.Action',
+      ['5DS-A202221', '5DS-A202222', '5DS-A202222'],
+      '5ds-demo'
+    )
+    response.send(classToPlain(found))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(403)
+    response.end()
+  }
+}
+
+export function deletePolicy(request: Request, response: Response): void {
+  const challenge = plainToClass(DeletePolicyRequest, request.body)
+
+  if (
+    request.params.policyId === '12321' &&
+    challenge.organisation === '5ds-demo'
+  ) {
+    response.status(204)
+  } else {
+    response.status(404)
+  }
+
+  response.setHeader('Content-Type', 'application/json')
+  response.end()
+}
+
+export function updatePolicy(request: Request, response: Response): void {
+  const updatePolicy = plainToClass(UpdatePolicyRequest, request.body)
+
+  if (
+    request.params.policyId === '12321' &&
+    updatePolicy.organisation === '5ds-demo'
+  ) {
+    const found = policy(
+      '5DS-P122322',
+      '2-3.MPA.Action',
+      ['5DS-A202221', '5DS-A202222', '5DS-A202222'],
+      '5ds-demo'
+    )
+    response.send(classToPlain(found))
+  } else {
+    response.status(404)
+    response.setHeader('Content-Type', 'application/json')
+    response.end()
+  }
+}

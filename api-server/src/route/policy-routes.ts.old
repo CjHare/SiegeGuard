@@ -1,0 +1,64 @@
+import {
+  authorizationValidator,
+  bodyValidator,
+  contentTypeValidator,
+  jsonParserSmallContent
+} from '@just_another_developer/common-server'
+import {Router} from 'express'
+import {
+  createPolicy,
+  deletePolicy,
+  getPolicy,
+  getPolicies,
+  updatePolicy
+} from '../controller/policy-controller'
+import {CreatePolicyRequest} from '../controller/request/create-policy-request'
+import {GetPolicyRequest} from '../controller/request/get-policy-request'
+import {GetPoliciesRequest} from '../controller/request/get-policies-request'
+import {DeletePolicyRequest} from '../controller/request/delete-policy-request'
+import {UpdatePolicyRequest} from '../controller/request/update-policy-request'
+
+export class PolicyRoutes {
+  private path = '/policy'
+
+  public addTo(router: Router): void {
+    router.get(
+      this.path,
+      authorizationValidator(),
+      jsonParserSmallContent,
+      bodyValidator(GetPoliciesRequest),
+      getPolicies
+    )
+    router.post(
+      this.path,
+      authorizationValidator(),
+      jsonParserSmallContent,
+      bodyValidator(CreatePolicyRequest),
+      createPolicy
+    )
+    router.get(
+      `${this.path}/:policyId`,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      bodyValidator(GetPolicyRequest),
+      getPolicy
+    )
+    router.delete(
+      `${this.path}/:policyId`,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      bodyValidator(DeletePolicyRequest),
+      deletePolicy
+    )
+    router.post(
+      `${this.path}/:policyId`,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      bodyValidator(UpdatePolicyRequest),
+      updatePolicy
+    )
+  }
+}

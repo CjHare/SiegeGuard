@@ -1,0 +1,7 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "reporter" : ["text", "html"],
+  "all": true,
+  "include": "src/**/*.ts",  
+  "check-coverage": false
+}

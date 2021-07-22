@@ -1,0 +1,82 @@
+import {queryStringParameterToNumber} from '@just_another_developer/common-server'
+import {plainToClass, classToPlain} from 'class-transformer'
+import {Request, Response} from 'express'
+import {UpdateAgentRequest} from './request/update-agent-request'
+import {CreateAgentRequest} from './request/create-agent-request'
+import {GetAgentsRequest} from './request/get-agents-request'
+import {agent} from '../model/agent'
+import {slimAgent} from '../model/slim-agent'
+import {log} from '../container'
+
+export function getAgent(request: Request, response: Response): void {
+  if (request.params.agentId === '12321') {
+    const found = agent('5DS-A202221', 'Frank Smith', '0499373333', '5ds-demo')
+    response.send(classToPlain(found))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(404)
+    response.end()
+  }
+}
+
+export function getAgents(request: Request, response: Response): void {
+  const getAgent = plainToClass(GetAgentsRequest, request.body)
+
+  const page = queryStringParameterToNumber('page', request.query, 1)
+  const limit = queryStringParameterToNumber('limit', request.query, 25)
+
+  log.silly(`${page} ${limit}`)
+
+  if (getAgent.organisation === '5ds-demo') {
+    const found = [
+      slimAgent('5DS-A202232', 'Frank Smith'),
+      slimAgent('5DS-A202230', 'Jane Smith')
+    ]
+    response.send(classToPlain(found))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(500)
+    response.end()
+  }
+}
+
+export function createAgent(request: Request, response: Response): void {
+  const createAgent = plainToClass(CreateAgentRequest, request.body)
+
+  if (createAgent.organisation === '5ds-demo') {
+    const found = agent('5DS-A202221', 'Frank Smith', '0499373331', '5ds-demo')
+    response.status(201)
+    response.send(classToPlain(found))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(403)
+    response.end()
+  }
+}
+
+export function deleteAgent(request: Request, response: Response): void {
+  if (request.params.agentId === '12321') {
+    response.status(204)
+  } else {
+    response.status(404)
+  }
+
+  response.setHeader('Content-Type', 'application/json')
+  response.end()
+}
+
+export function updateAgent(request: Request, response: Response): void {
+  const updateAgent = plainToClass(UpdateAgentRequest, request.body)
+
+  if (
+    request.params.agentId === '12321' &&
+    updateAgent.organisation === '5ds-demo'
+  ) {
+    const found = agent('5DS-A202221', 'Frank Smith', '0499373331', '5ds-demo')
+    response.send(classToPlain(found))
+  } else {
+    response.status(404)
+    response.setHeader('Content-Type', 'application/json')
+    response.end()
+  }
+}

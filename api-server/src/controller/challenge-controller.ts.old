@@ -1,0 +1,127 @@
+import {queryStringParameterToNumber} from '@just_another_developer/common-server'
+import {plainToClass, classToPlain} from 'class-transformer'
+import {Request, Response} from 'express'
+import {GetChallengeRequest} from './request/get-challenge-request'
+import {GetChallengesRequest} from './request/get-challenges-request'
+import {GetChallengeResponse} from './response/get-challenge-response'
+import {GetChallengesResponse} from './response/get-challenges-response'
+import {CreateChallengesRequest} from './request/create-challenge-request'
+import {CreateChallengeResponse} from './response/create-challenge-response'
+import {challengeRequest} from '../model/challenge-request'
+import {challengeResponse} from '../model/challenge-response'
+import {evaluationParameter} from '../model/evaluation-parameter'
+import {auditLog} from '../model/audit-log'
+import {DeleteChallengeRequest} from './request/delete-challenge-request'
+import {log, mvpDemoPolicy} from '../container'
+import {
+  Agent,
+  AgentId,
+  AgentUsername,
+  MvpDemoPolicy
+} from '@just_another_developer/solidity'
+
+export function getChallenge(request: Request, response: Response): void {
+  const getChallenge = plainToClass(GetChallengeRequest, request.body)
+
+  if (
+    request.params.challengeId === '12321' &&
+    getChallenge.organisation === '5ds-demo'
+  ) {
+    //TODO replace with solidty contract call to the appropriate policy to create a challenge
+    createBlockchainEvent()
+
+    //TODO the challenge comes as response from the solidty contract call
+    const challenge = new GetChallengeResponse(
+      '5DS-C343334',
+      '5DS-P202232',
+      challengeRequest(
+        evaluationParameter('download', '5ds-policies.docx'),
+        auditLog('peter@5ds.io', 'Updating website')
+      ),
+      challengeResponse('complete', 'approve')
+    )
+
+    response.send(classToPlain(challenge))
+    response.end()
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(404)
+    response.end()
+  }
+}
+
+function createBlockchainEvent(): void {
+  log.info('Triggering the blockchain event')
+
+  const agent = Agent.of(AgentId.of(1), AgentUsername.of('turtle'))
+
+  const awaitBlockchainEvent = async () => {
+    //TODO authorize should be by either username or id, not both - lookup maybe?
+    await mvpDemoPolicy().then((policy: MvpDemoPolicy) => {
+      policy.authorize(agent).catch((error: Error) => {
+        log.error(
+          'Problem sending a transaction to the %s contract: %s',
+          MvpDemoPolicy.name,
+          error
+        )
+      })
+    })
+  }
+
+  awaitBlockchainEvent()
+}
+
+export function getChallenges(request: Request, response: Response): void {
+  const getChallenges = plainToClass(GetChallengesRequest, request.body)
+
+  const page = queryStringParameterToNumber('page', request.query, 1)
+  const limit = queryStringParameterToNumber('limit', request.query, 25)
+
+  log.silly(`${page} ${limit}`)
+
+  if (getChallenges.organisation === '5ds-demo') {
+    const challenges = [
+      new GetChallengesResponse('5DS-C343334', '5DS-P202232'),
+      new GetChallengesResponse('5DS-A333331', '5DS-P202232')
+    ]
+    response.send(classToPlain(challenges))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(204)
+    response.end()
+  }
+}
+
+export function createChallenge(request: Request, response: Response): void {
+  const createChallenge = plainToClass(CreateChallengesRequest, request.body)
+
+  if (createChallenge.organisation === '5ds-demo') {
+    const challenge = new CreateChallengeResponse(
+      '23498SDF98S9D8F9S8D984J4J',
+      '5DS-C12221'
+    )
+
+    response.status(201)
+    response.send(classToPlain(challenge))
+  } else {
+    response.setHeader('Content-Type', 'application/json')
+    response.status(404)
+    response.end()
+  }
+}
+
+export function deleteChallenge(request: Request, response: Response): void {
+  const challenge = plainToClass(DeleteChallengeRequest, request.body)
+
+  if (
+    request.params.challengeId === '12321' &&
+    challenge.organisation === '5ds-demo'
+  ) {
+    response.status(204)
+  } else {
+    response.status(404)
+  }
+
+  response.setHeader('Content-Type', 'application/json')
+  response.end()
+}

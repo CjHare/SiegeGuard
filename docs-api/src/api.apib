@@ -1,0 +1,909 @@
+FORMAT: 1A
+HOST: https://api.5ds.io
+# 5DS Siege Guard API
+Creation and mangagment of Multi-Party-Authorization (MPA) Challenge, Policy and Agent objects.
+
+# Group Challenges
+A Challenge is an instance of a Policy, whose purpose is to seek Authorization for a desired action.
+The result of a challenge is `pending` until processing is complete, then the result may be either `accept`, `deny` or `void`, depending on the outcome of the 5DS evaluation logic and user input. 
+
+## Challenge [/v1/challenge?page={page}&limit={limit}] 
+
+### View All Challenges [GET]
+    Retrieves all pending Challenges belonging to an Organisation. 
+
++ Parameters
+    + limit (number, optional, `25`) ... Maximum number of Challenge objects to return, default of 25, minimum of 1 and maximum of 100.
+    + page (number, optional, `1`) ... Index from which to begin retrieving the Challenge objects, deafults to 1.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema  
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }
+                }
+            }               
+
++ Response 200 (application/json)    
+
+    + Body
+
+            {
+                "results" : [    
+                    {
+                        "id": "5DS-C343334",
+                        "organisation": "5ds-demo",
+                        "callbackToken": "23498SDF98S9D8F9S8D984ACB",
+                        "created":"2020-12-30T13:45:05Z",
+                        "policy": {
+                            "id": "5DS-P202232",
+                            "evaluate": { 
+                                "action": "download", 
+                                "resource": "5ds-policies.docx"
+                                }
+                            },
+                            "audit": { 
+                                "user": "sample.user@5ds.io",
+                                "reason": "Updating website"
+                                }
+                            },
+                            "result": "approve"
+                        }
+                    },      
+                    {     
+                        "id": "5DS-A333331",
+                        "organisation": "5ds-demo",
+                        "callbackToken": "234CCSDF98S9D83333984ACB",
+                        "created":"2020-12-30T13:45:32Z",
+                        "policy": {
+                            "id": "5DS-P202232",
+                            "evaluate": { 
+                                "action": "download", 
+                                "resource": "5ds-policies.docx"
+                                }
+                            },
+                            "audit": { 
+                                "user": "anon@5ds.io",
+                                "reason": "Motive that gets recorded for audit purposes in the 5DS system"
+                                }
+                            },
+                            "result": "pending"
+                        }
+                    }
+                ],
+                "_links": [
+                    {
+                        "href": "/v1/challenge?page=3&limit=25",
+                        "rel": "self"
+                    },
+                    {
+                        "href": "/v1/challenge?page=1&limit=25",
+                        "rel": "first"
+                    },
+                    {
+                        "href": "/v1/challenge?page=5&limit=25",
+                        "rel": "last"
+                    },
+                    {
+                        "href": "/v1/challenge?page=2&limit=25",
+                        "rel": "prev"
+                    },
+                    {
+                        "href": "/v1/challenge?page=4&limit=25",
+                        "rel": "next"
+                    }
+                ]
+            }
+
+    + Schema
+
+            {
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "type": [Challenge]
+                    }
+                },
+                "_links": {
+                    "type": "array",
+                    "items": {
+                        "type": [PaginationLink]
+                    }
+                }
+            }        
+
+## Create Challenge [/v1/challenge] 
+
+### Create Challenge [POST]
+A Challenge instance created from a Policy template.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo",
+                "policy": {
+                    "id": "5DS-P202232",
+                    "evaluate": { 
+                        "action": "download", 
+                        "resource": "5ds-policies.docx"
+                        }
+                    },
+                    "audit": { 
+                        "user": "peter@5ds.io",
+                        "reason": "Updating website"
+                        }
+                    },
+                    "result": "approve"
+                }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {        
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "policy": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },   
+                            "evaluate": {
+                                "type": "object"
+                            }
+                        }
+                    },
+                    "audit": {
+                        "type": "object"
+                    },                    
+                    "result": {
+                        "type": "string"
+                    }
+                }
+            }  
+
++ Response 202 (application/json)
+
+    + Body
+
+            {
+                "callbackToken": "23498SDF98S9D8F9S8D984J4J"
+            }
+
+    + Schema  
+
+            {
+                "type": "object",
+                "properties": {
+                    "callbackToken": {
+                        "type": "string"
+                    }                    
+                }
+            }                    
+
+## Update Challenge [/v1/challenge/{challengeId}]
+    
++ Parameters
+    + challengeId (string) - The ID of the challenge
+    
+### View Challenge [GET]
+View a specific Challenge belonging to an Organisation.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema    
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }
+                }
+            }              
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "5DS-C343334",
+                "organisation": "5ds-demo",
+                "callbackToken": "23498SDF98S9D8F9S8D984ACB",
+                "created": "2020-12-30T13:45:05Z",
+                "policy": {
+                    "id": "5DS-P202232",
+                    "evaluate": { 
+                        "action": "download", 
+                        "resource": "5ds-policies.docx"
+                        }
+                    },
+                    "audit": { 
+                        "user": "peter@5ds.io",
+                        "reason": "Updating website"
+                        }
+                    },
+                    "result": "approve"
+                }
+            }   
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },                
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "callbackToken": {
+                        "type": "string"
+                    },   
+                    "created": {
+                        "type": "date (ISO 8601 - YYYY-MM-DDThh:mm:ssTZD)"
+                    },   
+                    "policy": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },   
+                            "evaluate": {
+                                "type": "object"
+                            }
+                        }
+                    },
+                    "audit": {
+                        "type": "object"
+                    },                    
+                    "result": {
+                        "type": "string"
+                    }
+                }
+            }
+
++ Response 404 (application/json)
+
+### Void Challenge [DELETE]
+Voids a pending Challenge belonging to an Organisation.
+If the Challenge exists with a complete status, then a 304 is returned.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }
+                }
+            }  
+
++ Response 204 (application/json)
+
++ Response 404 (application/json)
+
+
+
+
+
+
+
+# Group Policy
+A Challenge is instanced from a Policy, where a Policy is a tailored provided MPA template.
+
+## Policy [/v1/policy?page={page}&limit={limit}] 
+
+### View All Policies [GET]
+Retrieve every Policy for an Organisation.
+
++ Parameters
+    + limit (number, optional, `25`) ... Maximum number of Policy objects to return, default of 25, minimum of 1 and maximum of 100.
+    + page (number, optional, `1`) ... Index from which to begin retrieving the Policy objects, deafults to 1.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }
+                }
+            }  
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "results": [
+                    {
+                        "id": "5DS-P122322",
+                        "organisation": "5ds-demo",
+                        "created":"2020-12-30T13:40:02Z",                
+                        "active": true,
+                        "template": {
+                            "id": "2-3.MPA.Action",                
+                            "settings": {
+                                "callbackUrl": "some.where.com",
+                                "agents": [ "5DS-Agent1",
+                                            "5DS-Agent3",
+                                            "5DS-Agent6"]
+                            }
+                        }
+                    },
+                    {
+                        "id": "5DS-P122344",
+                        "organisation": "5ds-demo",
+                        "created":"2020-12-14T13:22:54Z",                
+                        "active": false,
+                        "template": {
+                            "id": "2-3.MPA.Action",                
+                            "settings": {
+                                "callbackUrl": "some.where.com",
+                                "agents": [ "5DS-Agent1",
+                                            "5DS-Agent3",
+                                            "5DS-Agent8"]
+                            }
+                        }
+                    }
+                ],
+                "_links": [
+                    {
+                        "href": "/v1/policy?page=3&limit=25",
+                        "rel": "self"
+                    },
+                    {
+                        "href": "/v1/policy?page=1&limit=25",
+                        "rel": "first"
+                    },
+                    {
+                        "href": "/v1/policy?page=5&limit=25",
+                        "rel": "last"
+                    },
+                    {
+                        "href": "/v1/policy?page=2&limit=25",
+                        "rel": "prev"
+                    },
+                    {
+                        "href": "/v1/policy?page=4&limit=25",
+                        "rel": "next"
+                    }
+                ]
+            }            
+
+    + Schema
+
+            {
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "type": [Policy]
+                    }
+                },
+                "_links": {
+                    "type": "array",
+                    "items": {
+                        "type": [PaginationLink]
+                    }
+                }
+            }        
+
+## Create Policy [/v1/policy] 
+
+### Create Policy [POST]
+Policy creation by customising a provided MPA template.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+             {
+                "organisation": "5ds-demo",
+                "active": true,
+                "template": {
+                    "id": "2-3.MPA.Action",                
+                    "settings": {
+                        "callbackUrl": "some.where.com",
+                        "agents": [ "5DS-Agent1",
+                                    "5DS-Agent3",
+                                    "5DS-Agent6"]
+                    }
+                }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    },
+                    "template": {
+                        "type": "object",
+                        "properties": {
+                            "settings": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }        
+
++ Response 202 (application/json)
+
+
+## Update Policy [/v1/policy/{id}]
+    
++ Parameters
+    + id (string) - ID of the Policy object, assigned by 5DS.
+    
+### View Policy [GET]
+View a specific Policy belonging to an Organisation.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }
+                }
+            }  
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "5DS-P122322",
+                "organisation": "5ds-demo",
+                "created":"2020-12-30T13:40:02Z",                   
+                "active": true,
+                "template": {
+                    "id": "2-3.MPA.Action",                
+                    "settings": {
+                        "callbackUrl": "some.where.com",
+                        "agents": [ "5DS-Agent1",
+                                    "5DS-Agent3",
+                                    "5DS-Agent6"]
+                    }
+                }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "created": {
+                        "type": "date (ISO 8601 - YYYY-MM-DDThh:mm:ssTZD)"
+                    },                       
+                    "active": {
+                        "type": "boolean"
+                    },
+                    "template": {
+                        "type": "object",
+                        "properties": {
+                            "settings": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+
++ Response 404 (application/json)
+
+### Update Policy [POST]
+Update one or more of the post creation configurable fields.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+    
+            {
+                "organisation": "5ds-demo"
+                "active": false
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                }
+            }    
+
++ Response 202 (application/json)
+
+
+### Delete Policy [DELETE]
+Removes a Policy from the set of available Policy templates when creating Challenges.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }
+                }
+            }  
+
++ Response 204 (application/json)
+
++ Response 404 (application/json)
+
+
+
+
+
+# Group Agent
+Agents are entities that participate in MPA. They are referenced by Policy objects.
+
+## Agent [/v1/agent?page={page}&limit={limit}] 
+
+### View All Agents [GET]
+Retrieves all Agents belonging to an Organisation.
+
++ Parameters
+    + limit (number, optional, `25`) ... Maximum number of Agent objects to return, default of 25, minimum of 1 and maximum of 100.
+    + page (number, optional, `1`) ... Index from which to begin retrieving the Agent objects, deafults to 1.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    }                                                       
+                }
+            }  
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "results": [
+                    {
+                        "id": "5DS-A202221",
+                        "organisation": "5ds-demo",
+                        "created":"2020-12-30T13:38:44Z",                                          
+                        "mfa": {
+                            "id": "Frank Smith",
+                            "device": "0499373331"
+                        }
+                    },
+                    {
+                        "id": "5DS-A202230",
+                        "organisation": "5ds-demo",
+                        "created":"2020-12-30T13:38:56Z", 
+                        "mfa": {
+                            "id": "Jane Smith",
+                            "device": "0499373331"            
+                        }
+                    }
+                ],
+                "_links": [
+                    {
+                        "href": "/v1/agent?page=3&limit=25",
+                        "rel": "self"
+                    },
+                    {
+                        "href": "/v1/agent?page=1&limit=25",
+                        "rel": "first"
+                    },
+                    {
+                        "href": "/v1/agent?page=5&limit=25",
+                        "rel": "last"
+                    },
+                    {
+                        "href": "/v1/agent?page=2&limit=25",
+                        "rel": "prev"
+                    },
+                    {
+                        "href": "/v1/agent?page=4&limit=25",
+                        "rel": "next"
+                    }
+                ]
+            }     
+
+    + Schema
+
+            {
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "type": [Agent]
+                    }
+                },
+                "_links": {
+                    "type": "array",
+                    "items": {
+                        "type": [PaginationLink]
+                    }
+                }
+            }          
+
+## Create Agent [/v1/agent]
+
+### Create Agent [POST]
+Creates an Agent with their appropriate details for MPA, who belongs to an Organisation.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body
+
+            {
+                "organisation": "5ds-demo"
+                "mfa": {
+                    "id": "Frank Smith",
+                    "device": "0499373331"
+                }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "mfa": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "device": {
+                                "type": "string"
+                            }                                                            
+                        }
+                    }                                                           
+                }
+            }  
+
++ Response 202 (application/json)
+
+
+## Update Agents [/v1/agent/{id}]
++ Parameters
+    + id (string) - ID of the Agent object, assigned by 5DS.
+    
+### View Agent [GET]
+Retrieves a specific Agent, who belongs to an Organisation.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]        
+
++ Response 200 (application/json)
+
+    + Body 
+        
+            {
+                "id": "5DS-A202221",
+                "organisation": "5ds-demo",
+                "created":"2020-12-30T13:38:44Z",                   
+                "mfa": {
+                    "id": "Frank Smith",
+                    "device": "0499373331"
+                }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "organisation": {
+                        "type": "string"
+                    },
+                    "created": {
+                        "type": "date (ISO 8601 - YYYY-MM-DDThh:mm:ssTZD)"
+                    },                       
+                    "mfa": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "device": {
+                                "type": "string"
+                            }                                                            
+                        }
+                    }                                                      
+                }
+            }  
+        
++ Response 404 (application/json)
+
+### Update Agent [POST]
+Updates the configurable details of an Agent, who belongs to an Organisation.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
+    + Body   
+
+            {
+                "mfa": {
+                    "mfaId": "Frank Smith",
+                    "mfaDevice": "0499373331"
+                }
+            }
+
+    + Schema
+
+            {
+                "type": "object",
+                "properties": {
+                      "mfa": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "device": {
+                                "type": "string"
+                            }                                                            
+                        }
+                    }                                                     
+                }
+            }  
+
++ Response 202 (application/json)
+
++ Response 404 (application/json)
+
+### Delete Agent [DELETE]
+Removes an Agent from the set of Agents available when creating a Policy.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer-[API-Key]
+
++ Response 204 (application/json)
+
++ Response 404 (application/json)

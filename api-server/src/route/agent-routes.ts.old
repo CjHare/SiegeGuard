@@ -1,0 +1,62 @@
+import {
+  authorizationValidator,
+  bodyValidator,
+  contentTypeValidator,
+  jsonParserSmallContent
+} from '@just_another_developer/common-server'
+import {Router} from 'express'
+import {
+  createAgent,
+  deleteAgent,
+  getAgent,
+  getAgents,
+  updateAgent
+} from '../controller/agent-controller'
+import {CreateAgentRequest} from '../controller/request/create-agent-request'
+import {GetAgentsRequest} from '../controller/request/get-agents-request'
+import {UpdateAgentRequest} from '../controller/request/update-agent-request'
+
+export class AgentRoutes {
+  private path = '/agent'
+
+  public addTo(router: Router): void {
+    router.get(
+      this.path,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      bodyValidator(GetAgentsRequest),
+      getAgents
+    )
+    router.post(
+      this.path,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      bodyValidator(CreateAgentRequest),
+      createAgent
+    )
+    router.get(
+      `${this.path}/:agentId`,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      getAgent
+    )
+    router.delete(
+      `${this.path}/:agentId`,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      deleteAgent
+    )
+    router.post(
+      `${this.path}/:agentId`,
+      authorizationValidator(),
+      contentTypeValidator(),
+      jsonParserSmallContent,
+      bodyValidator(UpdateAgentRequest),
+      updateAgent
+    )
+  }
+}

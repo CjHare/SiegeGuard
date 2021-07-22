@@ -1,0 +1,66 @@
+image: node:12
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  NPM_TOKEN: ${NPM_TOKEN}
+
+# Test deploy, actual publishing is a manual step
+deploy:
+  stage: deploy
+  script:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">.npmrc
+    - npm publish --dry-run    
+
+lint:
+  stage: build
+  script:
+    - npm i
+    - npm run lint
+  cache:
+    policy: push
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm i
+    - npm run build
+  cache:
+    policy: push
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - dist/
+
+test:
+  stage: test
+  script:
+    - npm i
+    - npm run coverage
+  cache:
+    policy: pull
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - dist/
+      - coverage/
+
+document:
+  stage: test
+  script:
+    - npm i
+    - npm run document
+  cache:
+    policy: pull
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - doc/

@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "description": "5DS API",
+  "author": "5DS",
+  "license": "",
+  "main": "src/api.apib",
+  "scripts": {
+    "generate": "aglio -i src/api.apib -o html/5ds_api.html"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "aglio": "^2.3.0"
+  }
+}

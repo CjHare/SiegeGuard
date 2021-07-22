@@ -1,0 +1,14 @@
+{
+  "name": "@just_another_developer/prettier-configuration",
+  "version": "0.0.4",
+  "description": "5DS MVP Prettier Configuration",
+  "author": "Christopher Hare <chris.hare@5ds.io>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/5ds/mvp/prettier-configuration.git"
+  },
+  "peerDependencies": {
+    "prettier": "^2.2.1"
+  }
+}
