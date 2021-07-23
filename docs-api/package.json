@@ -1,9 +1,9 @@
 {
-  "name": "api",
+  "name": "@just_another_developer/siegeguard-api",
   "version": "0.0.1",
-  "description": "5DS API",
-  "author": "5DS",
-  "license": "",
+  "description": "SiegeGuard API",
+  "author": "CJ Hare <cjhare@users.noreply.github.com>",
+  "license": "Apache License 2.0",
   "main": "src/api.apib",
   "scripts": {
     "generate": "aglio -i src/api.apib -o html/5ds_api.html"

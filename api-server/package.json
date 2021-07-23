@@ -1,11 +1,11 @@
 {
-  "name": "5ds_api_server",
+  "name": "@just_another_developer/siegeguard-api-server",
   "version": "0.0.1",
-  "description": "5DS API Server",
-  "author": "5DS",
-  "license": "UNLICENSED",
+  "description": "SiegeGuard API Server",
+  "author": "CJ Hare <cjhare@users.noreply.github.com>",
+  "license": "Apache License 2.0",
   "main": "src/server.ts",
-  "prettier": "@just_another_developer/prettier-configuration",
+  "prettier": "@just_another_developer/siegeguard-prettier-configuration",
   "private": true,
   "scripts": {
     "build:dev": "rimraf ./dist && tsc",
@@ -23,8 +23,8 @@
     "test-unit": "mocha --exit --recursive --require ts-node/register 'test-unit/**/*.test.ts'"
   },
   "dependencies": {
-    "@just_another_developer/common-server": "0.0.10",
-    "@just_another_developer/solidity": "^0.1.0",
+    "@just_another_developer/siegeguard-common-server": "0.0.1",
+    "@just_another_developer/siegeguard-solidity": "^0.1.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "express": "^4.17.1",
@@ -35,10 +35,10 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@just_another_developer/eslint-config": "0.0.8",
-    "@just_another_developer/nyc-configuration": "0.0.3",
-    "@just_another_developer/prettier-configuration": "0.0.4",
-    "@just_another_developer/typescript-configuration": "0.0.6",
+    "@just_another_developer/siegeguard-eslint-config": "0.0.1",
+    "@just_another_developer/siegeguard-nyc-configuration": "0.0.1",
+    "@just_another_developer/siegeguard-prettier-configuration": "0.0.1",
+    "@just_another_developer/siegeguard-typescript-configuration": "0.0.1",
     "@types/chai": "^4.2.14",
     "@types/express": "^4.17.9",
     "@types/mocha": "^8.2.0",
@@ -65,7 +65,7 @@
     "typescript": "^4.2.4"
   },
   "eslintConfig": {
-    "extends": "@just_another_developer/eslint-config"
+    "extends": "@just_another_developer/siegeguard-eslint-config"
   },
   "husky": {
     "hooks": {
@@ -79,6 +79,6 @@
     ]
   },
   "nyc": {
-    "extends": "@just_another_developer/nyc-configuration"
+    "extends": "@just_another_developer/siegeguard-nyc-configuration"
   }
 }

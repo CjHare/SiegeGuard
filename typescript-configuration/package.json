@@ -1,12 +1,12 @@
 {
-  "name": "@just_another_developer/typescript-configuration",
-  "version": "0.0.7",
-  "description": "5DS MVP Typescript Configuration",
-  "author": "Christopher Hare <chris.hare@5ds.io>",
-  "license": "UNLICENSED",
+  "name": "@just_another_developer/siegeguard-typescript-configuration",
+  "version": "0.0.1",
+  "description": "SiegeGuard Typescript Configuration",
+  "author": "CJ Hare <cjhare@users.noreply.github.com>",
+  "license": "Apache License 2.0",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/5ds/mvp/typescript-configuration.git"
+    "url": "https://github.com/CjHare/SiegeGuard.git"
   },
   "peerDependencies": {
     "@types/chai": "^4.2.18",

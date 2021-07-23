@@ -1,12 +1,12 @@
 {
-  "name": "@just_another_developer/eslint-config",
-  "version": "0.0.8",
-  "description": "MVP ESLint Configuration",
-  "author": "Christopher Hare <chris.hare@5ds.io>",
-  "license": "UNLICENSED",
+  "name": "@just_another_developer/siegeguard-eslint-config",
+  "version": "0.0.1",
+  "description": "SiegeGuard ESLint Configuration",
+  "author": "CJ Hare <cjhare@users.noreply.github.com>",
+  "license": "Apache License 2.0",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/5ds/mvp/eslint-configuration.git"
+    "url": "https://github.com/CjHare/SiegeGuard.git"
   },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.25.0",
