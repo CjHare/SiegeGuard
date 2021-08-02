@@ -1,27 +1,32 @@
 import {stringify} from '../../src/fifth-dimension-security/stringify'
+import {EthereumAddress} from '../../src/web3/domain/ethereum-address'
 
 /**
  * The message string to expect when you're giving an argument that is unitialized.
  */
 export function uninitializedArgument<T>(
   contract: string,
+  address: EthereumAddress,
   method: string,
   name: string,
   value: T
 ): string {
-  return `${contract} ${method} ( ${stringify(
+  return `${contract} @ ${address.value} ${method} ( ${stringify(
     value
   )} ) failed. Error: Returned error: VM Exception while processing transaction: revert Uninitialized ${name}`
 }
 
 export function uninitializedArgumentTwoParameters<T, U>(
   contract: string,
+  address: EthereumAddress,
   method: string,
   name: string,
   first: T,
   second: U
 ): string {
-  return `${contract} ${method} ( ${stringify(first)}, ${stringify(
+  return `${contract} @ ${address.value} ${method} ( ${stringify(
+    first
+  )}, ${stringify(
     second
   )} ) failed. Error: Returned error: VM Exception while processing transaction: revert ${name}.value is uninitialized`
 }
@@ -36,10 +41,11 @@ export function connectionError(): string {
 
 export function argumentNotFound(
   contract: string,
+  address: EthereumAddress,
   method: string,
   id: bigint
 ): string {
-  return `${contract} ${method} ( ${stringify(
+  return `${contract} @ ${address.value} ${method} ( ${stringify(
     id
   )} ) failed. Error: ${contract} ${method} ( ${id} ) failed to retrun a value.`
 }

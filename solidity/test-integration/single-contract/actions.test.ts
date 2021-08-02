@@ -418,40 +418,79 @@ async function assertPendingChallengeCountGreaterThanZero() {
 }
 
 function removeActionIdUninitialized(id: ActionId): string {
-  return uninitializedArgument('Actions', 'remove', 'actionId', id.value)
+  return uninitializedArgument(
+    'Actions',
+    actions.contract.getAddress(),
+    'remove',
+    'actionId',
+    id.value
+  )
 }
 
 function authorizedActionIdUninitialized(id: ActionId): string {
-  return uninitializedArgument('Actions', 'getAuthorized', 'actionId', id.value)
+  return uninitializedArgument(
+    'Actions',
+    actions.contract.getAddress(),
+    'getAuthorized',
+    'actionId',
+    id.value
+  )
 }
 
 function deniedActionIdUninitialized(id: ActionId): string {
-  return uninitializedArgument('Actions', 'getDenied', 'actionId', id.value)
+  return uninitializedArgument(
+    'Actions',
+    actions.contract.getAddress(),
+    'getDenied',
+    'actionId',
+    id.value
+  )
 }
 
 function pendingActionIdUninitialized(id: ActionId): string {
-  return uninitializedArgument('Actions', 'getPending', 'actionId', id.value)
+  return uninitializedArgument(
+    'Actions',
+    actions.contract.getAddress(),
+    'getPending',
+    'actionId',
+    id.value
+  )
 }
 
 function authorizedActionNotFound(id: ActionId): string {
-  return argumentNotFound('Actions', 'getAuthorized', id.value)
+  return argumentNotFound(
+    'Actions',
+    actions.contract.getAddress(),
+    'getAuthorized',
+    id.value
+  )
 }
 
 function pendingActionNotFound(id: ActionId): string {
-  return argumentNotFound('Actions', 'getPending', id.value)
+  return argumentNotFound(
+    'Actions',
+    actions.contract.getAddress(),
+    'getPending',
+    id.value
+  )
 }
 
 function deniedActionNotFound(id: ActionId): string {
-  return argumentNotFound('Actions', 'getDenied', id.value)
+  return argumentNotFound(
+    'Actions',
+    actions.contract.getAddress(),
+    'getDenied',
+    id.value
+  )
 }
 
 function authorizePendingChallengeNotFound(
   action: ActionId,
   challenge: ChallengeId
 ): string {
-  return `Actions authorizePendingChallenge ( ${stringify(
-    action.value
-  )}, ${stringify(
+  return `Actions @ ${
+    actions.contract.getAddress().value
+  } authorizePendingChallenge ( ${stringify(action.value)}, ${stringify(
     challenge.value
   )} ) failed. Error: Returned error: VM Exception while processing transaction: revert Expecting to have found the index of the Pending Challenge`
 }
@@ -460,9 +499,9 @@ function denyPendingChallengeNotFound(
   action: ActionId,
   challenge: ChallengeId
 ): string {
-  return `Actions denyPendingChallenge ( ${stringify(
-    action.value
-  )}, ${stringify(
+  return `Actions @ ${
+    actions.contract.getAddress().value
+  } denyPendingChallenge ( ${stringify(action.value)}, ${stringify(
     challenge.value
   )} ) failed. Error: Returned error: VM Exception while processing transaction: revert Expecting to have found the index of the Pending Challenge`
 }

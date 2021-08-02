@@ -220,26 +220,50 @@ describe('Devices contract', () => {
 })
 
 function deviceIdUninitialized(id: DeviceId): string {
-  return uninitializedArgument('Devices', 'get', 'deviceId', id.value)
+  return uninitializedArgument(
+    'Devices',
+    devices.contract.getAddress(),
+    'get',
+    'deviceId',
+    id.value
+  )
 }
 
 function deviceNotFound(id: DeviceId): string {
-  return argumentNotFound('Devices', 'get', id.value)
+  return argumentNotFound(
+    'Devices',
+    devices.contract.getAddress(),
+    'get',
+    id.value
+  )
 }
 
 function obsoleteDeviceNotFound(id: DeviceId): string {
-  return argumentNotFound('Devices', 'getObsolete', id.value)
+  return argumentNotFound(
+    'Devices',
+    devices.contract.getAddress(),
+    'getObsolete',
+    id.value
+  )
 }
 
 function agentDevicesNotFound(id: DeviceId): string {
-  return uninitializedArgument('Devices', 'agentDevices', 'agentId', id.value)
+  return uninitializedArgument(
+    'Devices',
+    devices.contract.getAddress(),
+    'agentDevices',
+    'agentId',
+    id.value
+  )
 }
 
 function obsoleteNonExistentDevice(
   id: DeviceId,
   reason: ObsoleteDeviceReason
 ): string {
-  return `Devices obsolete ( ${stringify(id.value)}, ${stringify(
+  return `Devices @ ${
+    devices.contract.getAddress().value
+  } obsolete ( ${stringify(id.value)}, ${stringify(
     reason.value
   )} ) failed. Error: Returned error: VM Exception while processing transaction: revert Uninitialized deviceId`
 }

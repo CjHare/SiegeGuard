@@ -16,7 +16,8 @@ interface ResetWebSocketConnection {
 }
 
 export class FifthDimensionSecurityWeb3WebSocket
-  implements FifthDimensionSecurityWeb3 {
+  implements FifthDimensionSecurityWeb3
+{
   private connectionConfig: WebSocketConnectionConfiguration
   private web3: Web3
   private provider: Web3WebSocketProvider

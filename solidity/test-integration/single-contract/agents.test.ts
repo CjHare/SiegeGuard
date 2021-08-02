@@ -133,11 +133,22 @@ describe('Agents contract', () => {
 })
 
 function agentIdUninitialized(id: AgentId): string {
-  return uninitializedArgument('Agents', 'get', 'agentId', id.value)
+  return uninitializedArgument(
+    'Agents',
+    agents.contract.getAddress(),
+    'get',
+    'agentId',
+    id.value
+  )
 }
 
 function agentNotFound(id: AgentId): string {
-  return argumentNotFound('Agents', 'get', id.value)
+  return argumentNotFound(
+    'Agents',
+    agents.contract.getAddress(),
+    'get',
+    id.value
+  )
 }
 
 async function assertAgentCountGreaterThanZero() {

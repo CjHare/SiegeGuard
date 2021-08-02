@@ -287,7 +287,9 @@ function uninitializedMessage(
   title: ChallengeTitle,
   message: ChallengeMessage
 ): string {
-  return `Challenger issue ( ${stringify(organization.value)}, ${stringify(
+  return `Challenger @ ${
+    challenge.contract.getAddress().value
+  } issue ( ${stringify(organization.value)}, ${stringify(
     policy.value
   )}, ${stringify(authorizing.value)}, ${stringify(
     receipient.value

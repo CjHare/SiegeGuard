@@ -327,12 +327,19 @@ async function assertPendingChallengeCountGreaterThanZero() {
 }
 
 function removeChallengeIdUninitialized(id: ChallengeId): string {
-  return uninitializedArgument('Challenges', 'remove', 'challengeId', id.value)
+  return uninitializedArgument(
+    'Challenges',
+    challenges.contract.getAddress(),
+    'remove',
+    'challengeId',
+    id.value
+  )
 }
 
 function authorizedChallengeIdUninitialized(id: ChallengeId): string {
   return uninitializedArgument(
     'Challenges',
+    challenges.contract.getAddress(),
     'getAuthorized',
     'challengeId',
     id.value
@@ -342,6 +349,7 @@ function authorizedChallengeIdUninitialized(id: ChallengeId): string {
 function deniedChallengeIdUninitialized(id: ChallengeId): string {
   return uninitializedArgument(
     'Challenges',
+    challenges.contract.getAddress(),
     'getDenied',
     'challengeId',
     id.value
@@ -351,6 +359,7 @@ function deniedChallengeIdUninitialized(id: ChallengeId): string {
 function pendingChallengeIdUninitialized(id: ChallengeId): string {
   return uninitializedArgument(
     'Challenges',
+    challenges.contract.getAddress(),
     'getPending',
     'challengeId',
     id.value
@@ -358,13 +367,28 @@ function pendingChallengeIdUninitialized(id: ChallengeId): string {
 }
 
 function authorizedChallengeNotFound(id: ChallengeId): string {
-  return argumentNotFound('Challenges', 'getAuthorized', id.value)
+  return argumentNotFound(
+    'Challenges',
+    challenges.contract.getAddress(),
+    'getAuthorized',
+    id.value
+  )
 }
 
 function pendingChallengeNotFound(id: ChallengeId): string {
-  return argumentNotFound('Challenges', 'getPending', id.value)
+  return argumentNotFound(
+    'Challenges',
+    challenges.contract.getAddress(),
+    'getPending',
+    id.value
+  )
 }
 
 function deniedChallengeNotFound(id: ChallengeId): string {
-  return argumentNotFound('Challenges', 'getDenied', id.value)
+  return argumentNotFound(
+    'Challenges',
+    challenges.contract.getAddress(),
+    'getDenied',
+    id.value
+  )
 }

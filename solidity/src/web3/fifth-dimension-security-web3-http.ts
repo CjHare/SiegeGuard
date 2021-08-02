@@ -9,7 +9,8 @@ import {log} from '../container'
 import {FifthDimensionSecurityWeb3} from './fifth-dimension-security-web3'
 
 export class FifthDimensionSecurityWeb3Http
-  implements FifthDimensionSecurityWeb3 {
+  implements FifthDimensionSecurityWeb3
+{
   private connectionConfig: HttpConnectionConfiguration
   private web3: Web3
 

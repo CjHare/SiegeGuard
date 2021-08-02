@@ -1,6 +1,6 @@
 {
-  "name": "@just_another_developer/siegeguard-eslint-config",
-  "version": "0.0.1",
+  "name": "@just_another_developer/eslint-config",
+  "version": "0.1.1",
   "description": "SiegeGuard ESLint Configuration",
   "author": "CJ Hare <cjhare@users.noreply.github.com>",
   "license": "Apache License 2.0",
