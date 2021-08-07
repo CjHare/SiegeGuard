@@ -5,11 +5,11 @@
  */
 pragma solidity ^0.8.3;
 
-//TODO rename - OrderedDoubleLinkedListUInt64
-//TODO are generics going to work for the key?
-//TODO duplicate values - or a set?
-
-contract DoubleLinkedList {
+/**
+ * Double linked list implementation of an ordered set.
+ * Only a single instance of a uint64 value is stored, in ascending order.
+ */
+contract OrderedDoubleLinkedListSet {
 
   uint64 constant NULL = 0;
   uint64 constant HEAD = 0;
@@ -18,13 +18,14 @@ contract DoubleLinkedList {
 
   uint private _size = 0;
 
+  // Each unit64 node has two neighbours, PREVIOUS and NEXT.
   mapping (uint64 => mapping (bool => uint64)) private _links;
 
-  function nextNodeId(uint64 node) internal view returns (uint64) {
+  function nextNode(uint64 node) internal view returns (uint64) {
     return _links[node][NEXT];
   }
 
-  function previousNodeId(uint64 node) internal view returns (uint64) {
+  function previousNode(uint64 node) internal view returns (uint64) {
     return _links[node][PREVIOUS];
   }
 
@@ -43,36 +44,65 @@ contract DoubleLinkedList {
 
   function insert(uint64 node) external {
 
-    if(_links[HEAD][NEXT] == NULL ){
+    if(_links[HEAD][NEXT] == NULL){       
       insert(HEAD, node, NEXT);
     }
     else{
-      uint64 pivotNode = nodeAt( _size / 2);
-
-      if(node == pivotNode){
-
-
-      } else if( node > pivotNode){
-        
-        //node is bigger
-      } else {
-
-        //node is smaller
-      }
+      recurse(node, 0, _size);
     }
 
     _size++;
   }
 
-  function nodeAt(uint index) internal view returns (uint64) {
+  /**
+   * Insert the node somewhere (inclusive) between the two indexes.
+   */
+  function recurse(uint64 node, uint startIndex, uint endIndex) internal {
+    uint range = endIndex - startIndex;
+    uint pivotIndex = startIndex + (range / 2);
+    uint64 pivotNode = nodeAt(pivotIndex);
 
+    if(node == pivotNode){
+      revert('Node is already present');
+    } else if(range < 2){
+      // can't recurse as there's no more to divide
+
+      if(pivotNode > node){
+        // node is smaller, insert before the pivot
+        insert(pivotNode, node, PREVIOUS);
+      }else{
+        // node is larger, insert after the pivot
+        insert(pivotNode, node, NEXT);
+      }
+    } else{
+      if(pivotNode > node){
+        // node is smaller :. into the lower half of the range
+        recurse(node, startIndex, pivotIndex);
+      }else{
+        // node is larger :. into the upper half of the range
+        recurse(node, pivotIndex, endIndex);
+      }
+    }
+  }
+
+  /**
+   * Iterating through the linked list starting from the head (index 0, value 0)
+   */
+  function nodeAt(uint index) internal view returns (uint64) {
+      uint64 node = HEAD;
+
+      for (uint i = 0; i < index; i++) {
+        node = nextNode(node);
+      }
+
+      return node;
   }
 
   function step(uint64 node, bool direction) internal view returns (uint64) {
     return _links[node][direction];
   }
 
-  function insert (uint64 existingNode, uint64 newNode, bool direction) internal {
+  function insert(uint64 existingNode, uint64 newNode, bool direction) internal {
         uint64 neighbour = _links[existingNode][direction];
         stitch (existingNode, newNode, direction);
         stitch (newNode, neighbour, direction);
