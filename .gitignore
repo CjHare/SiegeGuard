@@ -62,6 +62,7 @@ dist/
 
 # IDE
 .vscode
+.idea
 
 # Generated TS docs
 doc/
