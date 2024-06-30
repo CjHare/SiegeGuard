@@ -22,6 +22,12 @@ Despite letters of intent, we were unable to secure mutually agreeable terms wit
 
 ## Architecture
 
+### Network
+Although SiegeGuard was designed for any EVM compatible chain, the expected network was a private PoA chain between interested parties e.g. 5DS, Auditors, armed forces, large corps.
+The motivation for a private network over the mainnet Ethereum or a side chain was partially a decision of it's time (before L2 really came to prominence),
+but primarily due to the target customer bases.
+
+
 ### Technologies 
 
 #### TypeScript 
@@ -48,10 +54,14 @@ Client side (programmer's side, prior to creating the GitLab PR) used:
 
 
 #### Solidity
-Written with `0.8.3` version of the [Solidity programming language](https://docs.soliditylang.org/en/v0.8.3/)
+Written with `0.8.3` version of the [Solidity programming language](https://docs.soliditylang.org/en/v0.8.3/) (most recent version at the time).
 
 Besides the hand-rolled typed bindings, that were tested with unit and integration tests on locally deployed contract (on a private network),
 the Solidity was checked locally using [Slither](https://github.com/crytic/slither)
+
+Initially, I chose to use solc over leading frameworks like Hardhat or Truffle because of the low number of contracts involved. Additionally, based on prior experience,
+I had grievances with Truffle's opinionated approach and lacked confidence in Hardhat beyond running a test node.
+
 
 #### Docker
 Initial AWS deployment was of Docker containers, with the intention being to migrate to Kubernetes for production scalability.
