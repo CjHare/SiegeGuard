@@ -19,6 +19,12 @@ Specialising on a real-time internal Authorisation Service to help organisations
 ### MBP Outcome
 Despite letters of intent, we were unable to secure mutually agreeable terms with a suitable primary investor.
 
+#### Tasks Outstanding
+The decision to wrap up 5DS was taken slight before the backend was feature complete, the tasks that remained.
+
+- Updating the `.demo` files (RESTful endpoints for Agent, Challenge and Policy) to use the `solidity` project instead of hardcoded demo values.
+- Implement connection to a reliable challenge system, as OneSignal was proving unreliable.
+
 
 ## Architecture
 
