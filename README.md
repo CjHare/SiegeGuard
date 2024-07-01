@@ -59,7 +59,7 @@ Written with `0.8.3` version of the [Solidity programming language](https://docs
 Besides the hand-rolled typed bindings, that were tested with unit and integration tests on locally deployed contract (on a private network),
 the Solidity was checked locally using [Slither](https://github.com/crytic/slither)
 
-Initially, I chose to use solc over leading frameworks like Hardhat or Truffle because of the low number of contracts involved. Additionally, based on prior experience,
+Initially, I chose to use `solc` over leading frameworks like Hardhat or Truffle because of the low number of contracts involved. Additionally, based on prior experience,
 I had grievances with Truffle's opinionated approach and lacked confidence in Hardhat beyond running a test node.
 
 
@@ -71,7 +71,27 @@ Initial AWS deployment was of Docker containers, with the intention being to mig
 API Blueprint provides a concise yet expressive language to define APIs, which was used to generate API documentation to share with investors during the later implementation and design conversation with their technical experts. 
 
 
+### Servers
+Services are interaction points for either the end user or system manager, while the shared libraries provide code reuse for those services.
 
+#### Services
+- `challenge-response-server`: Accepts and evaluates the Agent's reply to a challenge.
+- `api-server`: RESTful server for managing that state of the Organization, Policies, Agents and Challenges.
+- `agent-console-server`: Provides access to any pending challenge requests by Organization.
+- `contract-deploy-server`: Deploys the EVM bytecode to a compatible chain.
+
+#### Shared / Common Libraries
+- `common-server`: shared exception, middleware, container and route setup.
+- `solidity`: Solidity contracts, with their strictly typed bindings, error handling, listeners and Web3 connection code.
+- `oracle-server`: WebSocket EVM chain listener for logging challenge events.
+- `rest-server-template`: framework to copy and paste to begin a new HTTP server that includes EVM related connection configuration.
+- `eslint-configuration`: EsLint configuration used by all folders with `server` in their title
+- `nyc-configuration`: NYC configuration used by all folders with `server` in their title
+- `preitter-configuration`: Prettier configuration used by all folders with `server` in their title
+- `typescript-configuration`: TypeScript configuration used by all folders with `server` in their title
+
+#### Deployment
+![SiegeGuard service deployment](/siege-guard-deployment.png "Server deployment")
 
 
 
