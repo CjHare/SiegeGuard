@@ -59,7 +59,7 @@ Written with `0.8.3` version of the [Solidity programming language](https://docs
 Besides the hand-rolled typed bindings, that were tested with unit and integration tests on locally deployed contract (on a private network),
 the Solidity was checked locally using [Slither](https://github.com/crytic/slither)
 
-Initially, I choose to use `solc` over leading frameworks like Hardhat or Truffle because of the low number of contracts involved. Additionally, based on prior experience,
+Initially, I chose to use `solc` over leading frameworks like Hardhat or Truffle because of the low number of contracts involved. Additionally, based on prior experience,
 I had grievances with Truffle's opinionated approach and lacked confidence in Hardhat beyond running a test node.
 
 
