@@ -24,6 +24,7 @@ The decision to wrap up 5DS was taken slight before the backend was feature comp
 
 - Updating the `.demo` files (RESTful endpoints for Agent, Challenge and Policy) to use the `solidity` project instead of hardcoded demo values.
 - Implement connection to a reliable challenge system, as OneSignal was proving unreliable.
+- Increased number of automated tests, primarily manually driven testing was being used, although some unit and integration tests exist, the feature coverage should be more complete.
 
 
 ## Architecture
