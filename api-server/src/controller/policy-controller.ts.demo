@@ -10,6 +10,14 @@ import {policy} from '../model/policy'
 import {slimPolicy} from '../model/slim-policy'
 import {log} from '../container'
 
+/*
+ * Part of the interactive demo used in the deep dive technical conversations with potential investors.
+ *
+ * `.demo` extension to highlight this is not on the active path, kept as template for final RESTful service.
+ *
+ * (Routes are added in `server.ts`)
+ */
+
 export function getPolicy(request: Request, response: Response): void {
   const getPolicy = plainToClass(GetPolicyRequest, request.body)
 

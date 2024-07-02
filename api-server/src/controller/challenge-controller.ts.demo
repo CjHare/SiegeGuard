@@ -20,6 +20,14 @@ import {
   MvpDemoPolicy
 } from '@just_another_developer/solidity'
 
+/*
+ * Part of the interactive demo used in the deep dive technical conversations with potential investors.
+ *
+ * `.demo` extension to highlight this is not on the active path, kept as template for final RESTful service.
+ *
+ * (Routes are added in `server.ts`)
+ */
+
 export function getChallenge(request: Request, response: Response): void {
   const getChallenge = plainToClass(GetChallengeRequest, request.body)
 

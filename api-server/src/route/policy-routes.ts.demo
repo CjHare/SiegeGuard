@@ -18,6 +18,14 @@ import {GetPoliciesRequest} from '../controller/request/get-policies-request'
 import {DeletePolicyRequest} from '../controller/request/delete-policy-request'
 import {UpdatePolicyRequest} from '../controller/request/update-policy-request'
 
+/*
+ * Part of the interactive demo used in the deep dive technical conversations with potential investors.
+ *
+ * `.demo` extension to highlight this is not on the active path, kept as template for final RESTful service.
+ *
+ * (Routes are added in `server.ts`)
+ */
+
 export class PolicyRoutes {
   private path = '/policy'
 

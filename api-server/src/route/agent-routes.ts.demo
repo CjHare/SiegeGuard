@@ -16,6 +16,14 @@ import {CreateAgentRequest} from '../controller/request/create-agent-request'
 import {GetAgentsRequest} from '../controller/request/get-agents-request'
 import {UpdateAgentRequest} from '../controller/request/update-agent-request'
 
+/*
+ * Part of the interactive demo used in the deep dive technical conversations with potential investors.
+ *
+ * `.demo` extension to highlight this is not on the active path, kept as template for final RESTful service.
+ *
+ * (Routes are added in `server.ts`)
+ */
+
 export class AgentRoutes {
   private path = '/agent'
 
