@@ -61,7 +61,6 @@ const load = async () => {
   )
 }
 
-//TODO this load does not force the thread to wait, farms loading to a worker thread
 load().catch((error: Error) => {
   log.error('Loading Organizations, %s', error)
   process.exit(9)

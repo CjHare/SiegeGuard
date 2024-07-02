@@ -125,8 +125,6 @@ contract MvpChallenges is Challenges, AccessControlled, InputValidator, MvpAgent
     validateChallengeId(challengeId);
     validateChallengeExists(challengeId);
 
-//TODO remove from AgentChallengeView too (for each agent)
-
     delete _pending[challengeId];   
     delete _authorized[challengeId];     
     delete _denied[challengeId];   

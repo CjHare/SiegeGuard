@@ -131,7 +131,6 @@ export class Organization extends SolidityContract {
     return address
   }
 
-  //TODO getting addresses is generic, with only the method and error log chaning - reuse!
   public async getChallengesAddress(): Promise<EthereumAddress> {
     let address: EthereumAddress | undefined
 

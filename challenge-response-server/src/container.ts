@@ -52,7 +52,6 @@ const load = async () => {
   organizations = await loadOrganizations(dns, web3, sender)
 }
 
-//TODO this load does not force the thread to wait, farms loading to a worker thread
 load().catch((error: Error) => {
   log.error('Loading Organizations, %s', error)
   process.exit(9)

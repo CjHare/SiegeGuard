@@ -35,10 +35,9 @@ export function getChallenge(request: Request, response: Response): void {
     request.params.challengeId === '12321' &&
     getChallenge.organisation === '5ds-demo'
   ) {
-    //TODO replace with solidty contract call to the appropriate policy to create a challenge
+
     createBlockchainEvent()
 
-    //TODO the challenge comes as response from the solidty contract call
     const challenge = new GetChallengeResponse(
       '5DS-C343334',
       '5DS-P202232',
@@ -64,7 +63,6 @@ function createBlockchainEvent(): void {
   const agent = Agent.of(AgentId.of(1), AgentUsername.of('turtle'))
 
   const awaitBlockchainEvent = async () => {
-    //TODO authorize should be by either username or id, not both - lookup maybe?
     await mvpDemoPolicy().then((policy: MvpDemoPolicy) => {
       policy.authorize(agent).catch((error: Error) => {
         log.error(

@@ -14,21 +14,15 @@ import '../access-control/AccessControlled.sol';
  */
 abstract contract MvpAgentChallengesView is AgentChallengesView, AccessControlled, InputValidator {  
 
-//TODO replace these with ordered, single linked list, using merge sort to insert and search
-
   mapping(uint64 => uint64[]) private _authorizedChallengeIds;
   mapping(uint64 => uint64[]) private _deniedChallengeIds;
   mapping(uint64 => uint64[]) private _pendingChallengeIds;
-
-
-//TODO move into separate contract (i.e. not abstract, give on Challenges & Agents constructors)
 
   function pendingChallengeForAgent(uint64 agentId, uint64 challengeId) internal {
     senderRequires(Role.ADMIN);  
     validateAgentId(agentId);
     validateChallengeId(challengeId);  
 
-      //TODO insert into first space      
     _pendingChallengeIds[agentId].push(challengeId);
   }
 
@@ -45,7 +39,6 @@ abstract contract MvpAgentChallengesView is AgentChallengesView, AccessControlle
       }
     }
 
-      //TODO insert into first space
     _authorizedChallengeIds[agentId].push(challengeId);
   }
 
@@ -62,16 +55,13 @@ abstract contract MvpAgentChallengesView is AgentChallengesView, AccessControlle
       }
     }
 
-      //TODO insert into first space
     _deniedChallengeIds[agentId].push(challengeId);
   }
 
   function removeChallengeForAgent(uint64 agentId, uint64 challengeId) internal view {
     senderRequires(Role.ADMIN);  
     validateAgentId(agentId);
-    validateChallengeId(challengeId);    
-
-    //TODO remove from all
+    validateChallengeId(challengeId);
   }
 
   function authorizedChallengeIdsForAgent(uint64 agentId) external override view returns (uint64[] memory challenges){

@@ -5,7 +5,6 @@ import {
   Organization
 } from '@just_another_developer/solidity'
 
-//TODO this should not exist - push feature into Solidity lib
 export async function loadChallenges(
   organization: Organization,
   web3: FifthDimensionSecurityWeb3Http,

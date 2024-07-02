@@ -6,7 +6,6 @@ import {
 } from '@just_another_developer/solidity'
 import {loadChallenges} from './load-challenges'
 
-//TODO this should not exist - push feature into Solidity lib
 export async function loadAgentChallengesView(
   organizations: Map<bigint, Organization>,
   web3: FifthDimensionSecurityWeb3Http,
