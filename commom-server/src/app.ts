@@ -14,9 +14,6 @@ export class App {
     this.app = express()
     this.port = port
 
-    //TODO assert the accessLog exists - failfast
-    //TODO assert the log exists - failfast
-
     this.removeExpressResponseHeader()
     this.addAccessLogging()
 

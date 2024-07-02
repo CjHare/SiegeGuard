@@ -44,13 +44,9 @@ export function deploy(request: Request, response: Response): void {
   let organization: Organization
   let organizations: Organizations
   let policies: Policies
-
-  //TODO the policy should get create later on, input from user
   let policy: Policy
 
   const deployContracts = async () => {
-    //TODO these transaction could be done async with different sender accounts
-
     await deployContract(web3, sender, AccessControl)
       .then((contract: AccessControl) => {
         accessControl = contract
@@ -107,9 +103,6 @@ export function deploy(request: Request, response: Response): void {
         )
       }
 
-      //TODO needs the name of the Organization - inject (request object)
-      //TODO the first challenges is the AgentChallengesView - will need updating later
-
       if (policies !== undefined && challenges !== undefined) {
         await deployContract(web3, sender, Organization, [
           accessControlAddress,
@@ -161,7 +154,6 @@ export function deploy(request: Request, response: Response): void {
         await organizations.add(organization.getAddress()).catch(logError)
       }
 
-      //TODO Policy needs it's title - inject (requests object)
       if (
         deploymentErrors.length == 0 &&
         actions !== undefined &&

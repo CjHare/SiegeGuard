@@ -42,10 +42,6 @@ export class EventEmitterListener extends SolidityContract {
         log.info('Event variables: %s', stored.returnValues)
         log.info('Event variable _to: %s', stored.returnValues._to)
         log.info('Event variable _amount: %s', stored.returnValues._amount)
-
-        //TODO verify nothing expected is undefined
-
-        //TODO logic for what todo sits here, may need additional fields on construction
       })
       .on('error', (error: Error) => {
         log.error('Error when trying to listen for events: %s', error)

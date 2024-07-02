@@ -8,7 +8,6 @@ import {
   OrganizationId
 } from '@just_another_developer/solidity'
 
-//TODO this should not exist - push feature into Solidity lib
 export async function loadOrganizations(
   dns: DomainNameSystem,
   web3: FifthDimensionSecurityWeb3Http,

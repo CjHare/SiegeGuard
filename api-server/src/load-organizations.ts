@@ -9,7 +9,6 @@ import {
 } from '@just_another_developer/solidity'
 import {Logger} from 'winston'
 
-//TODO this should not exist - push feature into Solidity lib
 export function loadOrganizations(
   dns: DomainNameSystem,
   web3: FifthDimensionSecurityWeb3Http,
