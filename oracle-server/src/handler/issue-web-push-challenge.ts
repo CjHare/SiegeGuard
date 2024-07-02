@@ -17,12 +17,12 @@ const oneSignalUrl = 'https://onesignal.com/api/v1/notifications'
 const challengeUrl = 'https://seigeguard.5ds.io/challenge.html'
 
 /**
- * OneSignal proved to be unreliable, another service need using instead!
+ * Once the challenge had be accepted on the chain (with sufficient confidence of not being reordered), then a Push notification
+ * service would be invoked to push the action to the agent's chosen device.
  *
  * issueWebPushChallenge() was intended to be called after the log-challenge-evert had picked up the challenge event.
  *
- * Once the challenge had be accepted on the chain (with sufficient confidence of not being reordered), then a Push notification
- * service would be invoked to push the action to the agent's chosen device.
+ * At the time, OneSignal was proving unreliable in the use case we required, a more reliable option was being sought.
  */
 export function issueWebPushChallenge(
   authorizingOrganization: OrganizationId,
