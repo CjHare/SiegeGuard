@@ -16,6 +16,14 @@ import {GetChallengesRequest} from '../controller/request/get-challenges-request
 import {CreateChallengesRequest} from '../controller/request/create-challenge-request'
 import {DeleteChallengeRequest} from '../controller/request/delete-challenge-request'
 
+/*
+ * Part of the interactive demo used in the deep dive technical conversations with potential investors.
+ *
+ * `.demo` extension to highlight this is not on the active path, kept as template for final RESTful service.
+ *
+ * (Routes are added in `server.ts`)
+ */
+
 export class ChallengeRoutes {
   private path = '/challenge'
 

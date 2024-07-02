@@ -8,6 +8,14 @@ import {agent} from '../model/agent'
 import {slimAgent} from '../model/slim-agent'
 import {log} from '../container'
 
+/*
+ * Part of the interactive demo used in the deep dive technical conversations with potential investors.
+ *
+ * `.demo` extension to highlight this is not on the active path, kept as template for final RESTful service.
+ *
+ * (Routes are added in `server.ts`)
+ */
+
 export function getAgent(request: Request, response: Response): void {
   if (request.params.agentId === '12321') {
     const found = agent('5DS-A202221', 'Frank Smith', '0499373333', '5ds-demo')
