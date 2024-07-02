@@ -16,7 +16,14 @@ const oneSignalAppId = '217eb85c-43bf-417d-a198-25579b7f2e40'
 const oneSignalUrl = 'https://onesignal.com/api/v1/notifications'
 const challengeUrl = 'https://seigeguard.5ds.io/challenge.html'
 
-//TODO  defunct implementation - not using OneSignal
+/**
+ * OneSignal proved to be unreliable, another service need using instead!
+ *
+ * issueWebPushChallenge() was intended to be called after the log-challenge-evert had picked up the challenge event.
+ *
+ * Once the challenge had be accepted on the chain (with sufficient confidence of not being reordered), then a Push notification
+ * service would be invoked to push the action to the agent's chosen device.
+ */
 export function issueWebPushChallenge(
   authorizingOrganization: OrganizationId,
   authorizingPolicy: PolicyId,
@@ -60,6 +67,4 @@ export function issueWebPushChallenge(
   }
 
   issueChallenge()
-
-  //TODO reply to front end || redirect front end to appropriate success/error page
 }
